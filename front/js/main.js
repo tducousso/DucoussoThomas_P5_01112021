@@ -1,3 +1,5 @@
+//PAGE ACCUEIL
+
 //Appel API
 async function getApi() {
     try {
