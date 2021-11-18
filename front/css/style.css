@@ -103,7 +103,7 @@ h2 {
 	color: var(--text-color);
 }
 .menu nav ul li:hover {
-	font-weight: 600;
+	font-weight: 800;
 	color: #3498db !important;
 }
 
