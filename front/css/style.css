@@ -13,11 +13,13 @@ h1 {
 	font-weight: 700;
 	margin-top: 135px;
 	text-align: center;
+	text-decoration: underline;
 }
 h2 {
 	font-weight: 400;
 	margin-bottom: 60px;
 	text-align: center;
+	text-decoration: underline;
 }
 .logo {
 	height: 100px;
