@@ -105,6 +105,7 @@ h2 {
 .menu nav ul li:hover {
 	font-weight: 800;
 	color: #3498db !important;
+	text-decoration: underline #3498db 3px;
 }
 
 /*banniere*/
