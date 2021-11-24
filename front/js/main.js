@@ -12,7 +12,7 @@ async function getApi() {
 
 //Récupération des données et insertion dans le DOM    
 async function getItems() {
-    let result = await getApi()
+    await getApi()
         .then(function (data) {
 
             // Boucle
@@ -42,7 +42,7 @@ async function getItems() {
                 productDescription.textContent = element.description;
 
                 // Affichage (DOM)
-                article.appendChild(image);  // Rajoute le tout sur ma page html
+                article.appendChild(image);  // Implante le tout sur ma page html
                 article.appendChild(productName);
                 article.appendChild(productDescription);
                 card.appendChild(article);
