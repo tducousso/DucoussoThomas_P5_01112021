@@ -1,10 +1,10 @@
-// PAGE PRODUIT
+//PAGE PRODUIT
 
 // recupération url de la page produit + id
 let urlLocation = window.location.href;
 let urlKanap = new URL(urlLocation);
 let idKanap = urlKanap.searchParams.get("id");
-console.log(idKanap);
+// console.log(idKanap);
 
 // api + id pour avoir une page 'monoproduit'
 async function getApiId() {
@@ -20,6 +20,7 @@ async function getApiId() {
 async function getProduct() {
   await getApiId()
     .then(function (value) {
+      console.log(value);
       // modif titre page web avec nom produit
       document.querySelector("title").innerHTML = value.name;
 

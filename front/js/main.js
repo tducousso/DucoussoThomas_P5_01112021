@@ -1,6 +1,6 @@
 //PAGE ACCUEIL
 
-//Appel API
+//Call API
 async function getApi() {
     try {
         let response = await fetch("http://localhost:3000/api/products");
@@ -14,10 +14,10 @@ async function getApi() {
 async function getItems() {
     await getApi()
         .then(function (data) {
-
+            console.log(data);
             // Boucle
             data.forEach(element => {
-                console.log(element);
+                // console.log(element);
 
                 // création lien vers page produit
                 let card = document.createElement('a');
