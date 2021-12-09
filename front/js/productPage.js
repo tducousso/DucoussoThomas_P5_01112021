@@ -1,4 +1,4 @@
-//PAGE PRODUIT
+//PAGE PRODUIT (mono-produit)
 
 // recupération url de la page produit + id
 let urlLocation = window.location.href;
@@ -6,7 +6,7 @@ let urlKanap = new URL(urlLocation);
 let idKanap = urlKanap.searchParams.get("id");
 // console.log(idKanap);
 
-// api + id pour avoir une page 'monoproduit'
+// api + idKanap pour avoir une page 'monoproduit'
 async function getApiId() {
   try {
     let response = await fetch("http://localhost:3000/api/products/" + idKanap);

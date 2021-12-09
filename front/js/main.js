@@ -1,4 +1,4 @@
-//PAGE ACCUEIL
+//PAGE ACCUEIL (tous les produits)
 
 //Call API
 async function getApi() {
@@ -51,11 +51,34 @@ async function getItems() {
             });
         })
         // Si il y a une erreur (exemple: node server off) 
-        .catch(function (err) {
-            console.log("Error : " + err);
+        .catch (function(error){
             let errorHtml = document.querySelector("#items");
-            errorHtml.innerHTML = "<div>Une erreur s'est produite: Nous ne pouvons pas afficher les articles.</div>";
+            errorHtml.innerHTML = "<div>Une erreur s'est produite: Nous ne pouvons pas afficher les articles.</div>"; // ou alert
+            return error;
         })
 }
 
 getItems();
+
+
+/* Autres façon de faire pour récup les données: 
+
+(async function renderItems() {
+	let items = await getApi();
+	let htmlRender = "";
+	items.forEach((item) => {
+		let htmlContent = `
+		<a href="./product.html?id=${item._id}">
+			<article>
+				<img src="${item.imageUrl}" alt="${item.altTxt}">
+				<h3 class="productName">${item.name}</h3>
+				<p class="productDescription">${item.description}</p>
+			</article>
+		</a>
+		`;
+		htmlRender += htmlContent;
+	});
+	const itemContainer = document.getElementById("items");
+	itemContainer.innerHTML += htmlRender;
+})();
+*/

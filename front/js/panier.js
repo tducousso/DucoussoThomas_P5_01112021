@@ -3,7 +3,7 @@
 const cart = JSON.parse(localStorage.getItem("cart"));
 console.table(cart);
 
-
+// Fonction pour faire apparaitre mes items dans le panier.
 async function displayItem() {
   if (cart === null || cart == 0) { // Si panier vide >>> afficher msg "Le panier est vide" + display none formulaire.
     document.getElementById("cart__items").innerHTML = "<p>\u2689 Le panier est vide. Vous pouvez retourner sur notre page d'accueil. \u2689</p>";
@@ -102,7 +102,6 @@ async function displayItem() {
     totalPrice();
     deleteItem();
     changeQuantity();
-
   };
 }
 displayItem();
@@ -124,14 +123,14 @@ function totalItemInCart() {
 }
 
 
-// Function TTal Prix
+// Function TTal Prix   >>>>>>>   .reduce? à tester
 function totalPrice() {
   let totalPrice = parseInt(0);
   let totalQty = Number(0);
   // console.log('test')
   let elements = document.querySelectorAll('.cart__item');
   elements.forEach(element => {
-    let dataAttribute = element.getAttribute('data-id');
+    const dataAttribute = element.getAttribute('data-id');
     let productQty = element.querySelector(".itemQuantity").value;
     //total de produit dans le panier :
     totalQty += Number(productQty);
@@ -181,7 +180,7 @@ function changeQuantity() {
 }
 
 
-// Function Delete   >>>>>>>  .bind ? à tester   .filter? à tester      *.Splice*
+// Function Delete   >>>>>>>   .bind? à tester   .filter? à tester      
 function deleteItem() {
   let deleteItem = document.querySelectorAll(".deleteItem");
   for (let z = 0; z < deleteItem.length; z++) {
@@ -232,10 +231,11 @@ class Formu {
 }
 
 // Regex
+// Fonction pour verifier la saisie des utilisateurs.
 function userVerification() {
 
   const userFormu = new Formu();
-  
+
   // Firstname
   function testFirstName() {
     const userFirstName = userFormu.firstName;
@@ -308,45 +308,31 @@ userVerification();
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
-// Mets les products id dans un array 
-function productToSend() {
-  let orderProduct = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    let idColor = localStorage.key(i);
-    let idColorArray = idColor.split(",");
-    let id = idColorArray[0];
-    orderProduct.push(id);
-  }
-  return orderProduct;
-}
-
 // Info >>> Back
 let userFormSubmit = document.getElementById("order");
-userFormSubmit.addEventListener("click", (e) => {
-  // userFormSubmit.addEventListener("submit", (e) => { a test
+userFormSubmit.addEventListener("click", (e) => {           // userFormSubmit.addEventListener("submit", (e) => { a tester
   e.preventDefault();
   let products = [];
-      //collecter les id des produits du panier
-      cart.forEach(element => {
-        products.push(element.ref);
-    })
-    console.log(products);
+
+  //collecter les id des produits du panier
+  cart.forEach(element => {
+    products.push(element.ref);
+  })
+  console.log(products);
+
   if (userVerification()) {
 
-     const contact = {
-        'firstName': firstName.value,
-        'lastName': lastName.value,
-        'address': address.value,
-        'city': city.value,
-        'email': email.value,
+    const contact = {
+      'firstName': firstName.value,
+      'lastName': lastName.value,
+      'address': address.value,
+      'city': city.value,
+      'email': email.value,
     };
 
-     // déclaration d'une variable contenant les infos de la commande
-     let order = {
-      contact,
-      products
-  }
-  console.log(order);
+    // déclaration d'une variable contenant les infos de la commande
+    let order = { contact, products }
+    // console.log(order);
 
     // POST API
     fetch("http://localhost:3000/api/products/order", {
@@ -357,11 +343,11 @@ userFormSubmit.addEventListener("click", (e) => {
       },
       body: JSON.stringify(order),
     })
-      .then((response) => response.json())  // -----> RECUP ID DE LA COMMANDE AU NIVEAU DE LA RESPONSE FETCHS
+      .then((response) => response.json())
       .then((data) => {
-        window.location.replace("./confirmation.html?id=" + data.orderId);
-        // document.location.href = `./confirmation.html?id=${data.orderId}`;
-        //  le recup dans le local storage
+        console.log(data);
+        // orderId à mettre dans le local storage? 
+        window.location.replace("./confirmation.html?id=" + data.orderId); // ou utiliser : document.location.href = `./confirmation.html?id=${data.orderId}`;
       })
       .catch((error) => {
         console.log("Error: " + error);
@@ -370,13 +356,10 @@ userFormSubmit.addEventListener("click", (e) => {
 });
 
 
- 
-// [A-Za-z]{3,20} >>> que des lettres de 3 a 20 cc 
-// /^[0-9]{5} [A-Za-zÀ-ÿ\-' ]+$/gi cp + lettres ?
+//////////////////////////////////////////////////////  VOCABULAIRES ET AIDES  \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-// RegExp.prototype.test(string) <<< pr tester mon regex
-
-/* gi? en fin de regex? ( FLAG )
+// Regex : http://blog.paumard.org/cours/java-api/chap03-expression-regulieres-syntaxe.htmls
+/* gi? en fin de REGEX? ( FLAG )
 g modifier: global. All matches (don't return on first match)
 i modifier: insensitive. Case insensitive match (ignores case of [a-zA-Z])
 In your case though i is immaterial as you dont capture [a-zA-Z].
@@ -384,19 +367,56 @@ For input like !@#$ if g modifier is not there regex will return first match !Se
 If g is there it will return the whole or whatever it can match.See here */
 
 
-// input.addEventListener('change', updateValue <<<< change
-
-//.reduce ? La méthode reduce() applique une fonction qui est un « accumulateur » et qui traite chaque valeur d'une liste (de la gauche vers la droite) afin de la réduire à une seule valeur.
-/*   const array1 = [1, 2, 3, 4];
-const reducer = (previousValue, currentValue) => previousValue + currentValue;
+/*  .reduce ? La méthode reduce() applique une fonction qui est un « accumulateur » et qui traite chaque valeur d'une liste (de la gauche vers la droite) afin de la réduire à une seule valeur.
+ const array1 = [1, 2, 3, 4];
+ const reducer = (previousValue, currentValue) => previousValue + currentValue;
  1 + 2 + 3 + 4
-console.log(array1.reduce(reducer));
- expected output: 10         */
+ console.log(array1.reduce(reducer));
+ expected output: 10 
+*/
 
-// .split? La méthode split() divise une chaîne de caractères en une liste ordonnée de sous-chaînes, place ces sous-chaînes dans un tableau et retourne le tableau. La division est effectuée en recherchant un motif ; où le motif est fourni comme premier paramètre dans l'appel de la méthode
+/*  .splice ? La méthode splice() modifie le contenu d'un tableau en retirant des éléments et/ou en ajoutant de nouveaux éléments à même le tableau.On peut ainsi vider ou remplacer une partie d'un tableau.
+ months.splice(4, 1, 'May');
+ replaces 1 element at index 4
+ console.log(months);
+ expected output: Array ["Jan", "Feb", "March", "April", "May"]
+*/
 
-/* .filter?
-const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
-const result = words.filter(word => word.length > 6);
-console.log(result);
-// expected output: Array ["exuberant", "destruction", "present"] */
+/*  .filter ?
+ const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+ const result = words.filter(word => word.length > 6);
+ console.log(result);
+ expected output: Array ["exuberant", "destruction", "present"] 
+*/
+
+/*  bind ? La méthode bind() crée une nouvelle fonction qui, lorsqu'elle est appelée, a pour contexte this la valeur passée en paramètre et éventuellement une suite d'arguments qui précéderont ceux fournis à l'appel de la fonction créée.
+*/
+
+/*  Number ? L'objet Number est une enveloppe objet (wrapper) autour du type primitif numérique. Autrement dit, il est utilisé pour manipuler les nombres comme des objets. Pour créer un objet Number, on utilise le constructeur Number().
+ L'objet Number est principalement utilisé dans les cas de figure suivants :
+ 1. Si l'argument ne peut pas être converti en un nombre, il renverra NaN.
+ 2. Dans un contexte de fonction simple (quand il n'est pas utilisé comme un constructeur avec l'opérateur new), Number peut être utilisé afin d'effectuer des conversions.
+*/
+
+/*  parseInt ? La fonction parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
+parseInt(string, base);
+La valeur qu'on souhaite analyser et convertir. Si l'argument string n'est pas une chaîne de caractères, elle sera convertie en une chaîne
+*/
+
+/*  indexOf ? La méthode indexOf() renvoie le premier indice pour lequel on trouve un élément donné dans un tableau.
+ Si l'élément cherché n'est pas présent dans le tableau, la méthode renverra -1.
+ arr.indexOf(élémentRecherché, indiceDébut)
+*/
+
+/*  Element.dataSet ? The dataset read-only property of the HTMLElement interface provides read/write access to custom data attributes (data-*) on elements. It exposes a map of strings (DOMStringMap) with an entry for each data-* attribute.
+*/
+
+/*  Element.closest ? a méthode Element.closest() renvoie l'ancêtre le plus proche de l'élément courant (ou l'élément courant) qui correspond aux sélecteurs passés comme paramètres. 
+ S'il n'existe pas de tel ancêtre, la méthode renvoie null.
+*/
+
+
+// Json.parse() >>> de Json à javascript
+// Json.stringify() >>> objet javascript à Json
+// localStorage.setItem >>> ajoute au localstorage (clé,valeur)
+// localStorage.getItem >>> va chercher l'info dans le localstorage
