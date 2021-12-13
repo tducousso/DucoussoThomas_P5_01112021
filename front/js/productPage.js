@@ -58,7 +58,7 @@ async function getProduct() {
   addToCartBtn.onclick = () => {
 
     let selectedColor = document.querySelector("#colors").value;
-    let quantity = Number(document.querySelector("input").value);
+    let quantity = Number(document.querySelector("input").value);             //The Number() method converts a value to a number.
     console.log("couleur et quantité sélectionnées : " + selectedColor + " " + quantity);
 
 

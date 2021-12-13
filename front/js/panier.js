@@ -115,7 +115,7 @@ function totalItemInCart() {
   let quantitySelector = document.querySelectorAll(".itemQuantity");
   let totalItem = 0;
   for (let w = 0; w < quantitySelector.length; w++) {
-    totalItem += parseInt(quantitySelector[w].value);
+    totalItem += parseInt(quantitySelector[w].value);         // renvoie un entier
   }
   const totalQuantityDisplay = document.getElementById("totalQuantity");
   totalQuantityDisplay.innerHTML = totalItem;
@@ -187,7 +187,7 @@ function deleteItem() {
     deleteItem[z].addEventListener('click', (event) => {
       event.preventDefault();
       let itemToDelete = cart.indexOf(cart[z]);
-      cart.splice(itemToDelete, 1);
+      cart.splice(itemToDelete, 1);                         // supprimer l'élement directement dans le tableau
       // renvoyer ce nouveau panier dans le localStorage
       localStorage.setItem('cart', JSON.stringify(cart));
       totalPrice();
@@ -240,7 +240,7 @@ function userVerification() {
   function testFirstName() {
     const userFirstName = userFormu.firstName;
     const firstNameErrorMsg = document.getElementById("firstNameErrorMsg");
-    if (/^([A-Za-z]{3,20})?([-]{0,1})?([A-Za-z]{3,20})$/.test(userFirstName)) {
+    if (/^[A-Za-zÀ-ÿ\-' ]{2,30}$/.test(userFirstName)) {
       firstNameErrorMsg.innerText = "CHECKED";
       return true;
     } else {
@@ -251,7 +251,7 @@ function userVerification() {
   function testLastName() {
     const userLastName = userFormu.lastName;
     const lastNameErrorMsg = document.getElementById("lastNameErrorMsg");
-    if (/^[A-Za-z]{2,20}$/.test(userLastName)) {
+    if (/^[A-Za-zÀ-ÿ\-' ]{2,30}$/.test(userLastName)) {
       lastNameErrorMsg.innerText = "CHECKED";
       return true;
     } else {
@@ -273,7 +273,7 @@ function userVerification() {
   function testCity() {
     const userCity = userFormu.city;
     const cityErrorMsg = document.getElementById("cityErrorMsg");
-    if (/^[A-Za-z]{2,20}$/.test(userCity)) {
+    if (/^[A-Za-zÀ-ÿ\-' ]{2,25}$/.test(userCity)) {
       cityErrorMsg.innerText = "CHECKED";
       return true;
     } else {
@@ -292,7 +292,7 @@ function userVerification() {
     }
   }
 
-  if (testFirstName() || testLastName() || testAdress() || testCity() || testEmail()) {
+  if (testFirstName() && testLastName() && testAdress() && testCity() && testEmail()) {
     // Mise des données utilisateur dans le local storage
     localStorage.setItem('formuValues', JSON.stringify(userFormu));
     return true;
@@ -393,13 +393,15 @@ If g is there it will return the whole or whatever it can match.See here */
 */
 
 /*  Number ? L'objet Number est une enveloppe objet (wrapper) autour du type primitif numérique. Autrement dit, il est utilisé pour manipuler les nombres comme des objets. Pour créer un objet Number, on utilise le constructeur Number().
- L'objet Number est principalement utilisé dans les cas de figure suivants :
+The Number() method converts a value to a number. 
+L'objet Number est principalement utilisé dans les cas de figure suivants :
  1. Si l'argument ne peut pas être converti en un nombre, il renverra NaN.
  2. Dans un contexte de fonction simple (quand il n'est pas utilisé comme un constructeur avec l'opérateur new), Number peut être utilisé afin d'effectuer des conversions.
 */
 
 /*  parseInt ? La fonction parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
 parseInt(string, base);
+The parseInt method parses a value as a string and returns the first integer.
 La valeur qu'on souhaite analyser et convertir. Si l'argument string n'est pas une chaîne de caractères, elle sera convertie en une chaîne
 */
 

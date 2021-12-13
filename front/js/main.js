@@ -1,6 +1,6 @@
 //PAGE ACCUEIL (tous les produits)
 
-//Call API
+//Call API avec la méthode fetch (avant >>> XMLHttpRequest)
 async function getApi() {
     try {
         let response = await fetch("http://localhost:3000/api/products");
@@ -51,7 +51,7 @@ async function getItems() {
             });
         })
         // Si il y a une erreur (exemple: node server off) 
-        .catch (function(error){
+        .catch (function (error){
             let errorHtml = document.querySelector("#items");
             errorHtml.innerHTML = "<div>Une erreur s'est produite: Nous ne pouvons pas afficher les articles.</div>"; // ou alert
             return error;
@@ -82,3 +82,6 @@ getItems();
 	itemContainer.innerHTML += htmlRender;
 })();
 */
+
+
+// GET & POST FETCH : https://www.digitalocean.com/community/tutorials/how-to-use-the-javascript-fetch-api-to-get-data-fr
